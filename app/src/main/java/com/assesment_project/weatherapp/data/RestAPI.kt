@@ -1,5 +1,6 @@
 package com.assesment_project.weatherapp.data
 
+import com.assesment_project.weatherapp.data.model.WeatherResult
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -7,7 +8,7 @@ import retrofit2.http.Path
 interface RestAPI {
 
     @GET("$PATH_URL{city}")
-    suspend fun getWeather(@Path("city") city:String): Response<String>
+    suspend fun getWeather(@Path("city") city:String): Response<WeatherResult>
 
     companion object{
         const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
