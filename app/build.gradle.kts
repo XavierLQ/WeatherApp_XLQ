@@ -75,4 +75,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
+    //Fused Location GMS
+    implementation ("com.google.android.gms:play-services-location:21.1.0")
+
+
 }
