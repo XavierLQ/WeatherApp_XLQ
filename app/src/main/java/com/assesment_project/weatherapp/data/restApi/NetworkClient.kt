@@ -1,4 +1,4 @@
-package com.assesment_project.weatherapp.data
+package com.assesment_project.weatherapp.data.restApi
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient

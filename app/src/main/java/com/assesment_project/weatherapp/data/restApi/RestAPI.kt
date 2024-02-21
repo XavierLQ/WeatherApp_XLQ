@@ -1,4 +1,4 @@
-package com.assesment_project.weatherapp.data
+package com.assesment_project.weatherapp.data.restApi
 
 import com.assesment_project.weatherapp.data.model.WeatherResult
 import retrofit2.Response

@@ -1,7 +1,7 @@
 package com.assesment_project.weatherapp.domain.useCases
 
 import com.assesment_project.weatherapp.data.model.WeatherResult
-import com.assesment_project.weatherapp.data.repository.NetworkRepository
+import com.assesment_project.weatherapp.data.restApi.NetworkRepository
 import retrofit2.Response
 
 class GetWeatherByCityUseCase(private val networkRepository: NetworkRepository) {
