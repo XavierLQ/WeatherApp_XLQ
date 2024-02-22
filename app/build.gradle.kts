@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -78,5 +80,16 @@ dependencies {
     //Fused Location GMS
     implementation ("com.google.android.gms:play-services-location:21.1.0")
 
+    //RoomDB
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 
+    //Hilt
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-compiler:2.50")
+
+}
+
+kapt {
+    correctErrorTypes = true
 }

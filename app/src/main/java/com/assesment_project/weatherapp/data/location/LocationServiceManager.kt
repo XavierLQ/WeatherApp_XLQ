@@ -7,15 +7,17 @@ import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
+import javax.inject.Inject
 
-class LocationServiceManager(private val context: Context) {
+class LocationServiceManager @Inject constructor(private val context: Context) {
     private val locationClient = LocationServices.getFusedLocationProviderClient(context)
     @SuppressLint("MissingPermission")
     fun getDeviceLocation(): Location{
         if (hasLocationPermissions()) {
             return locationClient.lastLocation.result
+        } else{
+            throw Exception("Does not have the required permissions")
         }
-        throw Exception("Does not have the required permissions")
     }
 
     private fun hasLocationPermissions(): Boolean{

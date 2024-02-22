@@ -6,6 +6,7 @@ import retrofit2.Response
 
 interface UseCaseRepo {
     suspend fun getWeather(city: String): Response<WeatherResult>
-    suspend fun getLocation(): Location
+    suspend fun getLocation(): String?
     suspend fun getPreviouslySearchedCity(): String?
+    suspend fun storeCitySearch(city: String)
 }

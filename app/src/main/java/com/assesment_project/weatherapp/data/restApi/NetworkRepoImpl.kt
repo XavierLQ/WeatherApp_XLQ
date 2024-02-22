@@ -2,8 +2,9 @@ package com.assesment_project.weatherapp.data.restApi
 
 import com.assesment_project.weatherapp.data.model.WeatherResult
 import retrofit2.Response
+import javax.inject.Inject
 
-class NetworkRepoImpl(private val client: InetworkClient): NetworkRepository {
+class NetworkRepoImpl @Inject constructor(private val client: InetworkClient): NetworkRepository {
 
     private val interceptor = client.getInterceptor()
     private val okHttpClient = client.getOkHttpClient(interceptor)

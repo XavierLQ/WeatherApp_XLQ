@@ -7,20 +7,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assesment_project.weatherapp.data.model.WeatherResult
 import com.assesment_project.weatherapp.domain.repository.UseCaseRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class WeatherViewModel(private val useCaseRepo: UseCaseRepo): ViewModel() {
+@HiltViewModel
+class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo): ViewModel() {
 
     //weather live data
     private val _weatherLiveData:MutableLiveData<WeatherResult> = MutableLiveData()
     val weatherLiveData:LiveData<WeatherResult> get() = _weatherLiveData
 
     //device location live data
-    private val _currentLocationLiveData:MutableLiveData<Location> = MutableLiveData()
-    val currentLocationLiveData:LiveData<Location> get() = _currentLocationLiveData
+    private val _currentLocationLiveData:MutableLiveData<String?> = MutableLiveData()
+    val currentLocationLiveData:LiveData<String?> get() = _currentLocationLiveData
 
     //latest search live data
     private val _latestSearchLiveData:MutableLiveData<String?> = MutableLiveData()
@@ -30,6 +33,8 @@ class WeatherViewModel(private val useCaseRepo: UseCaseRepo): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<WeatherResult> = useCaseRepo.getWeather(city)
+                useCaseRepo.storeCitySearch(city)
+
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _weatherLiveData.postValue(it)
@@ -38,7 +43,8 @@ class WeatherViewModel(private val useCaseRepo: UseCaseRepo): ViewModel() {
                 } else {
                     throw Exception("Response was unsuccessful")
                 }
-            } catch (e: Exception) { //Do something }
+            } catch (e: Exception) {
+            //Do something
             }
         }
     }
@@ -46,12 +52,13 @@ class WeatherViewModel(private val useCaseRepo: UseCaseRepo): ViewModel() {
     fun getCurrentLocation() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val location: Location = useCaseRepo.getLocation()
+                val location: String? = useCaseRepo.getLocation()
 
-                    location.let {
-                        _currentLocationLiveData.postValue(it)
-                    } ?: throw Exception("Location was null")
-            } catch (e: Exception) { //Do something }
+                location.let {
+                    _currentLocationLiveData.postValue(it)
+                } ?: throw Exception("Location was null")
+            } catch (e: Exception) {
+            //Do something
             }
         }
     }
@@ -64,7 +71,8 @@ class WeatherViewModel(private val useCaseRepo: UseCaseRepo): ViewModel() {
                 searchedCity?.let {
                     _latestSearchLiveData.postValue(it)
                 }
-            } catch (e: Exception) { //Do something }
+            } catch (e: Exception) {
+            //Do something
             }
         }
     }
