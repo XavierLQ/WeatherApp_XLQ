@@ -2,16 +2,22 @@ package com.assesment_project.weatherapp.domain.useCases
 
 import android.location.Location
 import com.assesment_project.weatherapp.data.location.LocationRepo
+import com.assesment_project.weatherapp.data.model.GeocodingResult
+import com.assesment_project.weatherapp.data.restApi.NetworkRepository
+import retrofit2.Response
 import javax.inject.Inject
 
-class GetDeviceLocationCityUseCase @Inject constructor(private val locationRepo: LocationRepo) {
-    suspend fun getLocation(): String? {
+class GetDeviceLocationCityUseCase @Inject constructor(private val locationRepo: LocationRepo,
+                                                       private val networkRepo: NetworkRepository) {
+    suspend fun getLocation(): Response<GeocodingResult>? {
         val location = locationRepo.getLocation()
         return location?.let{
             convertLocationToCity(it)
         }
     }
-    private fun convertLocationToCity(location: Location): String {
-        return ""
+    private suspend fun convertLocationToCity(location: Location): Response<GeocodingResult> {
+        val lat = location.latitude
+        val lon = location.longitude
+        return networkRepo.getCityFromLocation(lat, lon)
     }
 }

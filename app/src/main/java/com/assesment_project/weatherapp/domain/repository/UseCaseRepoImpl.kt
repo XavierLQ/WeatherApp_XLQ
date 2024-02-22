@@ -1,6 +1,7 @@
 package com.assesment_project.weatherapp.domain.repository
 
 import android.location.Location
+import com.assesment_project.weatherapp.data.model.GeocodingResult
 import com.assesment_project.weatherapp.data.model.WeatherResult
 import com.assesment_project.weatherapp.domain.useCases.GetDeviceLocationCityUseCase
 import com.assesment_project.weatherapp.domain.useCases.GetPreviouslySearchedCityUseCase
@@ -17,7 +18,7 @@ class UseCaseRepoImpl @Inject constructor(
 ): UseCaseRepo {
     override suspend fun getWeather(city: String): Response<WeatherResult> =
         weatherUseCase.getWeather(city)
-    override suspend fun getLocation(): String? =
+    override suspend fun getLocation(): Response<GeocodingResult>? =
         deviceLocationUseCase.getLocation()
     override suspend fun getPreviouslySearchedCity(): String? =
         previousSearchUseCase.getPreviousSearchedCity()

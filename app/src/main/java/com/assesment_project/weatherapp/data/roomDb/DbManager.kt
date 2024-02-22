@@ -17,6 +17,6 @@ object DbManager {
         Room.databaseBuilder(
             context.applicationContext,
             CityDatabase::class.java,
-            "characterDB"
+            "locationSearchesDB"
         ).build()
 }

@@ -6,10 +6,9 @@ import javax.inject.Inject
 
 class GetPreviouslySearchedCityUseCase @Inject constructor(private val context: Context, private val cityDB: CityDatabase){
 
-    fun getPreviousSearchedCity(): String?{
+    suspend fun getPreviousSearchedCity(): String?{
 
         val previouslySearchedCity = cityDB.cityDao().getLatestSearch()
-
-        return null
+        return previouslySearchedCity?.cityName
     }
 }

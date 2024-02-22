@@ -33,6 +33,6 @@ object NetworkModule {
         networkClient.getNetworkService(okHttpClient)
 
     @Provides
-    fun providesNetworkRepo(networkClient: NetworkClient): NetworkRepository =
-        NetworkRepoImpl(networkClient)
+    fun providesNetworkRepo(networkAPI: RestAPI): NetworkRepository =
+        NetworkRepoImpl(networkAPI)
 }

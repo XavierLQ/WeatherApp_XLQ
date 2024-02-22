@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.assesment_project.weatherapp.data.model.GeocodingResult
 import com.assesment_project.weatherapp.data.model.WeatherResult
 import com.assesment_project.weatherapp.domain.repository.UseCaseRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +23,8 @@ class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo)
     val weatherLiveData:LiveData<WeatherResult> get() = _weatherLiveData
 
     //device location live data
-    private val _currentLocationLiveData:MutableLiveData<String?> = MutableLiveData()
-    val currentLocationLiveData:LiveData<String?> get() = _currentLocationLiveData
+    private val _currentLocationLiveData:MutableLiveData<GeocodingResult> = MutableLiveData()
+    val currentLocationLiveData:LiveData<GeocodingResult> get() = _currentLocationLiveData
 
     //latest search live data
     private val _latestSearchLiveData:MutableLiveData<String?> = MutableLiveData()
@@ -51,14 +52,24 @@ class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo)
 
     fun getCurrentLocation() {
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val location: String? = useCaseRepo.getLocation()
 
-                location.let {
-                    _currentLocationLiveData.postValue(it)
-                } ?: throw Exception("Location was null")
+            try {
+                val response: Response<GeocodingResult>? = useCaseRepo.getLocation()
+
+                if(response == null){
+                    throw Exception("Couldn't get current location, response is null")
+                } else{
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            _currentLocationLiveData.postValue(it)
+
+                        } ?: throw Exception("Response was null")
+                    } else {
+                        throw Exception("Response was unsuccessful")
+                    }
+                }
             } catch (e: Exception) {
-            //Do something
+                //Do something
             }
         }
     }

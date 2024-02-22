@@ -13,7 +13,7 @@ interface CityDao {
     fun getAll(): List<LocationSearchedEntity>
 
     @Query("SELECT * FROM locationSearched ORDER BY timestamp DESC LIMIT 1")
-    fun getLatestSearch(): LocationSearchedEntity
+    fun getLatestSearch(): LocationSearchedEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(city: LocationSearchedEntity)

@@ -21,8 +21,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 object DomainModule {
 
     @Provides
-    fun provideLocationCityUseCase(locationRepo: LocationRepo) =
-        GetDeviceLocationCityUseCase(locationRepo)
+    fun provideLocationCityUseCase(locationRepo: LocationRepo, networkRepo: NetworkRepository) =
+        GetDeviceLocationCityUseCase(locationRepo, networkRepo)
 
     @Provides
     fun providePreviouslySearchedCityUseCase(@ApplicationContext context: Context, cityDB: CityDatabase) =
