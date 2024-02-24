@@ -35,7 +35,6 @@ class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo)
             try {
                 val response: Response<WeatherResult> = useCaseRepo.getWeather(city)
                 useCaseRepo.storeCitySearch(city)
-
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _weatherLiveData.postValue(it)
@@ -45,7 +44,7 @@ class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo)
                     throw Exception("Response was unsuccessful")
                 }
             } catch (e: Exception) {
-            //Do something
+            println("Exception: $e")
             }
         }
     }
