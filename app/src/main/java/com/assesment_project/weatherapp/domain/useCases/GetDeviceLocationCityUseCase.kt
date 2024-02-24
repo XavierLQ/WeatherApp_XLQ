@@ -10,7 +10,8 @@ import javax.inject.Inject
 class GetDeviceLocationCityUseCase @Inject constructor(private val locationRepo: LocationRepo,
                                                        private val networkRepo: NetworkRepository) {
     suspend fun getLocation(): Response<GeocodingResult>? {
-        val location = locationRepo.getLocation()
+        var location: Location? = null
+        location = locationRepo.getLocation()
         return location?.let{
             convertLocationToCity(it)
         }

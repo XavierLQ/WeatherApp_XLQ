@@ -13,8 +13,11 @@ class LocationServiceManager @Inject constructor(private val context: Context) {
     private val locationClient = LocationServices.getFusedLocationProviderClient(context)
     @SuppressLint("MissingPermission")
     fun getDeviceLocation(): Location{
+        //Await for the location to be updated on the result
         if (hasLocationPermissions()) {
-            return locationClient.lastLocation.result
+            return locationClient.lastLocation.addOnCompleteListener {
+                return@addOnCompleteListener
+            }.result
         } else{
             throw Exception("Does not have the required permissions")
         }
@@ -22,13 +25,8 @@ class LocationServiceManager @Inject constructor(private val context: Context) {
 
     private fun hasLocationPermissions(): Boolean{
 
-        val fineLocation = Manifest.permission.ACCESS_FINE_LOCATION
         val coarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION
-
         val permissionGranted = PackageManager.PERMISSION_GRANTED
-
-        return (ActivityCompat.checkSelfPermission(context, fineLocation) == permissionGranted &&
-                ActivityCompat.checkSelfPermission(context, coarseLocation) == permissionGranted)
+        return (ActivityCompat.checkSelfPermission(context, coarseLocation) == permissionGranted)
     }
-
 }

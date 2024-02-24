@@ -68,7 +68,7 @@ class WeatherViewModel @Inject constructor(private val useCaseRepo: UseCaseRepo)
                     }
                 }
             } catch (e: Exception) {
-                //Do something
+                println("Location failed: $e")
             }
         }
     }

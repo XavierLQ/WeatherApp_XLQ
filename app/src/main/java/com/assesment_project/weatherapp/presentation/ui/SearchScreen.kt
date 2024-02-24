@@ -106,7 +106,7 @@ fun SearchScreen(vm: WeatherViewModel,
     } else if(hasLocationPermission && !redirected){
         vm.getCurrentLocation()
         val currentCityResult = vm.currentLocationLiveData.observeAsState().value
-        val city = currentCityResult?.get(1)?.localNames?.en
+        val city = currentCityResult?.get(0)?.localNames?.en
         city?.let{
             redirected = true
             navController.navigate("weatherSearch/$it")

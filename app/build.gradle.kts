@@ -92,6 +92,9 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.50")
     kapt ("com.google.dagger:hilt-compiler:2.50")
 
+    //Glide
+    implementation("com.github.skydoves:landscapist-glide:1.3.7")
+
 }
 
 kapt {
