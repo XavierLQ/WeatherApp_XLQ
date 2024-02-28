@@ -47,7 +47,7 @@ fun SearchView(paddingValues: PaddingValues, navController: NavHostController, v
             onValueChange = {
                 text = it
             },
-            label = { Text("Label") }
+            label = { Text("City") }
         )
         Button(onClick = { weatherScreen(text, navController, vm) },) {
             Text(text = "Search City")

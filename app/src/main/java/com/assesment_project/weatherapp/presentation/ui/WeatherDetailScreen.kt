@@ -34,6 +34,11 @@ fun WeatherDetailScreen(city: String,
     val temp = weatherResult?.main?.temp
     val pressure = weatherResult?.main?.pressure
 
+    var tempInF: Long? = null
+    temp?.let{
+        tempInF = (1.8*(temp - 273.5) + 32).toLong()
+    }
+
     Column(
         Modifier.padding(paddingValues).fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -44,7 +49,7 @@ fun WeatherDetailScreen(city: String,
             modifier = Modifier.size(200.dp)
         )
 
-        Text("Temperature $temp")
-        Text("Pressure $pressure")
+        Text("Temperature ${tempInF} F")
+        Text("Pressure $pressure mmHg")
     }
 }
